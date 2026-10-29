@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge, Modal } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, Modal, StatusBadge } from '../../components/ui/UIComponents';
 import { PortfolioProject, ProjectStatus } from '../../types';
 import {
   FolderGit2,
@@ -131,18 +131,7 @@ export function ProjectsPortfolioPage() {
               <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <Badge
-                      variant={
-                        project.status === 'Completed'
-                          ? 'success'
-                          : project.status === 'In Progress'
-                          ? 'indigo'
-                          : 'default'
-                      }
-                      size="sm"
-                    >
-                      {project.status}
-                    </Badge>
+                    <StatusBadge status={project.status} size="sm" />
                     <Badge variant="outline" size="sm">
                       {project.difficulty}
                     </Badge>
@@ -237,24 +226,30 @@ export function ProjectsPortfolioPage() {
                     <button
                       key={m.id}
                       onClick={() => toggleProjectMilestone(project.id, m.id)}
-                      className={`p-2.5 rounded-lg border text-left text-xs transition cursor-pointer flex items-center gap-2 ${
+                      className={`p-2.5 rounded-lg border text-left text-xs transition cursor-pointer flex items-center justify-between gap-2 ${
                         m.isCompleted
                           ? 'bg-slate-950/60 border-slate-900 text-slate-400'
                           : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-200'
                       }`}
                     >
-                      <span
-                        className={`w-4 h-4 rounded border flex items-center justify-center text-[10px] shrink-0 ${
-                          m.isCompleted
-                            ? 'bg-emerald-600 border-emerald-500 text-white font-bold'
-                            : 'border-slate-700'
-                        }`}
-                      >
-                        {m.isCompleted && '✓'}
-                      </span>
-                      <span className={`truncate ${m.isCompleted ? 'line-through' : ''}`}>
-                        {m.title}
-                      </span>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span
+                          className={`w-4 h-4 rounded border flex items-center justify-center text-[10px] shrink-0 ${
+                            m.isCompleted
+                              ? 'bg-emerald-600 border-emerald-500 text-white font-bold'
+                              : 'border-slate-700'
+                          }`}
+                        >
+                          {m.isCompleted && '✓'}
+                        </span>
+                        <span className={`truncate ${m.isCompleted ? 'line-through text-slate-400' : ''}`}>
+                          {m.title}
+                        </span>
+                      </div>
+                      <StatusBadge
+                        status={m.isCompleted ? 'Completed' : 'In Progress'}
+                        size="sm"
+                      />
                     </button>
                   ))}
                 </div>

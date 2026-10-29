@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, StatusBadge } from '../../components/ui/UIComponents';
 import {
   Compass,
   Flame,
@@ -220,11 +220,10 @@ export function DashboardPage() {
                       <span className="text-[11px] font-mono text-slate-400">
                         {task.estimatedMinutes}m
                       </span>
-                      {task.isCompleted && (
-                        <Badge variant="success" size="sm">
-                          Done
-                        </Badge>
-                      )}
+                      <StatusBadge
+                        status={task.isCompleted ? 'Completed' : 'In Progress'}
+                        size="sm"
+                      />
                     </div>
                   </div>
                 ))}
@@ -369,12 +368,7 @@ export function DashboardPage() {
                     <span className="text-xs font-bold text-slate-100 truncate max-w-[180px]">
                       {proj.title}
                     </span>
-                    <Badge
-                      variant={proj.status === 'Completed' ? 'success' : proj.status === 'In Progress' ? 'indigo' : 'default'}
-                      size="sm"
-                    >
-                      {proj.status}
-                    </Badge>
+                    <StatusBadge status={proj.status} size="sm" />
                   </div>
                   <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">
                     {proj.description}
@@ -422,9 +416,7 @@ export function DashboardPage() {
                     <div className="font-bold text-slate-200">{app.companyName}</div>
                     <div className="text-[11px] text-slate-400">{app.nextStep}</div>
                   </div>
-                  <Badge variant="indigo" size="sm">
-                    {app.status}
-                  </Badge>
+                  <StatusBadge status={app.status} size="sm" />
                 </div>
               ))}
             </div>

@@ -241,3 +241,75 @@ export interface Achievement {
   isUnlocked: boolean;
   category: 'streak' | 'dsa' | 'roadmap' | 'projects';
 }
+
+// Mock Test Center & Assessment Engine
+export type MockTestCategory =
+  | 'Quantitative Aptitude'
+  | 'Logical Reasoning'
+  | 'Verbal Ability'
+  | 'Core CS & Programming'
+  | 'DSA & Problem Solving'
+  | 'Company-Specific Full Mock';
+
+export interface MockQuestion {
+  id: string;
+  category: MockTestCategory;
+  topic: string;
+  subtopic?: string;
+  question: string;
+  codeSnippet?: string;
+  options: string[];
+  correctOptionIndex: number;
+  explanation: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  targetCompanies?: string[];
+  timeEstimateSeconds?: number;
+}
+
+export type MockTestStatus = 'Not Started' | 'In Progress' | 'Completed' | 'Abandoned';
+
+export interface MockTestSession {
+  id: string;
+  title: string;
+  category: MockTestCategory;
+  totalQuestions: number;
+  durationMinutes: number;
+  questions: MockQuestion[];
+  userAnswers: Record<string, number>; // questionId -> selectedOptionIndex
+  markedForReview: string[]; // array of questionIds
+  status: MockTestStatus;
+  startedAt?: string;
+  completedAt?: string;
+  timeSpentSeconds: number;
+  earnedMarks: number;
+  totalMarks: number;
+  accuracy: number;
+  aiFeedbackSummary?: string;
+}
+
+export interface TopicPerformance {
+  topic: string;
+  correct: number;
+  total: number;
+  accuracy: number;
+}
+
+export interface MockTestDiagnosticReport {
+  sessionId: string;
+  testTitle: string;
+  category: MockTestCategory;
+  completedAt: string;
+  totalQuestions: number;
+  attemptedQuestions: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  unattemptedQuestions: number;
+  scorePercentage: number;
+  timeSpentSeconds: number;
+  avgSecondsPerQuestion: number;
+  topicBreakdown: TopicPerformance[];
+  strongTopics: string[];
+  weakTopics: string[];
+  aiActionPlan?: string;
+  suggestedTasks?: string[];
+}

@@ -13,11 +13,11 @@ export function Badge({
 }) {
   const variantStyles = {
     default: 'bg-slate-800 text-slate-300 border-slate-700',
-    success: 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60',
-    warning: 'bg-amber-950/60 text-amber-300 border-amber-800/60',
-    danger: 'bg-rose-950/60 text-rose-300 border-rose-800/60',
-    indigo: 'bg-indigo-950/70 text-indigo-300 border-indigo-700/60',
-    purple: 'bg-violet-950/70 text-violet-300 border-violet-700/60',
+    success: 'bg-emerald-950/80 text-emerald-300 border-emerald-600/50 shadow-sm shadow-emerald-950/50',
+    warning: 'bg-amber-950/80 text-amber-300 border-amber-500/50 shadow-sm shadow-amber-950/50',
+    danger: 'bg-rose-950/80 text-rose-300 border-rose-600/50 shadow-sm shadow-rose-950/50',
+    indigo: 'bg-indigo-950/80 text-indigo-300 border-indigo-600/50 shadow-sm shadow-indigo-950/50',
+    purple: 'bg-violet-950/80 text-violet-300 border-violet-600/50 shadow-sm shadow-violet-950/50',
     outline: 'bg-transparent text-slate-300 border-slate-700',
   };
 
@@ -28,9 +28,81 @@ export function Badge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 font-medium rounded-full border ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`inline-flex items-center gap-1.5 font-semibold rounded-full border ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
     >
       {children}
+    </span>
+  );
+}
+
+export function StatusBadge({
+  status,
+  size = 'md',
+  className = '',
+}: {
+  status: string;
+  size?: 'sm' | 'md';
+  className?: string;
+}) {
+  const normalized = status.toLowerCase();
+
+  let badgeStyle = 'bg-slate-900 text-slate-300 border-slate-700';
+  let dotStyle = 'bg-slate-400';
+  let label = status;
+  let pulse = false;
+
+  if (normalized.includes('complete') || normalized.includes('solved') || normalized === 'done') {
+    badgeStyle = 'bg-emerald-950/90 text-emerald-300 border-emerald-500/60 shadow-sm shadow-emerald-950/50';
+    dotStyle = 'bg-emerald-400';
+    pulse = true;
+  } else if (
+    normalized.includes('progress') ||
+    normalized.includes('attempted') ||
+    normalized.includes('active')
+  ) {
+    badgeStyle = 'bg-amber-950/90 text-amber-300 border-amber-500/60 shadow-sm shadow-amber-950/50';
+    dotStyle = 'bg-amber-400';
+    pulse = true;
+  } else if (normalized.includes('deploy') || normalized.includes('offer')) {
+    badgeStyle = 'bg-indigo-950/90 text-indigo-200 border-indigo-500/60 shadow-sm shadow-indigo-950/50';
+    dotStyle = 'bg-indigo-400';
+    pulse = true;
+  } else if (
+    normalized.includes('blocked') ||
+    normalized.includes('reject') ||
+    normalized.includes('review')
+  ) {
+    badgeStyle = 'bg-rose-950/90 text-rose-300 border-rose-500/60 shadow-sm shadow-rose-950/50';
+    dotStyle = 'bg-rose-400';
+    pulse = false;
+  } else if (normalized.includes('idea') || normalized.includes('not started') || normalized.includes('unsolved')) {
+    badgeStyle = 'bg-slate-900/90 text-slate-400 border-slate-700/80';
+    dotStyle = 'bg-slate-500';
+    pulse = false;
+  } else if (normalized.includes('assessment') || normalized.includes('interview')) {
+    badgeStyle = 'bg-violet-950/90 text-violet-300 border-violet-500/60 shadow-sm shadow-violet-950/50';
+    dotStyle = 'bg-violet-400';
+    pulse = true;
+  }
+
+  const sizeStyles = {
+    sm: 'text-[11px] px-2.5 py-0.5',
+    md: 'text-xs px-3 py-1',
+  };
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 font-bold tracking-tight rounded-full border ${badgeStyle} ${sizeStyles[size]} ${className}`}
+    >
+      <span className="relative flex h-2 w-2">
+        {pulse && (
+          <span
+            className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotStyle}`}
+          />
+        )}
+        <span className={`relative inline-flex rounded-full h-2 w-2 ${dotStyle}`} />
+      </span>
+      <span>{label}</span>
     </span>
   );
 }

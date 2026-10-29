@@ -1,4 +1,4 @@
-import { RoadmapStage } from '../types';
+import type { RoadmapStage } from '../types/index.ts';
 
 export function generateCuratedStagesForRole(
   role: string = 'Software Development Engineer',

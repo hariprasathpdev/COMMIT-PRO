@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge, Modal } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, Modal, StatusBadge } from '../../components/ui/UIComponents';
 import { JobApplication, ApplicationStage } from '../../types';
 import {
   Briefcase,
@@ -227,8 +227,11 @@ export function ApplicationsPage() {
 
                       <div className="text-[11px] text-slate-400 truncate mt-0.5">{app.role}</div>
 
-                      <div className="mt-2 text-[10px] text-indigo-400 font-mono font-medium">
-                        {app.packageStipend}
+                      <div className="mt-2 flex items-center justify-between gap-1">
+                        <span className="text-[10px] text-indigo-400 font-mono font-medium">
+                          {app.packageStipend}
+                        </span>
+                        <StatusBadge status={app.status} size="sm" />
                       </div>
 
                       {app.nextStep && (
@@ -285,9 +288,7 @@ export function ApplicationsPage() {
                     </td>
                     <td className="py-3 px-4 text-slate-300">{app.role}</td>
                     <td className="py-3 px-4">
-                      <Badge variant="indigo" size="sm">
-                        {app.status}
-                      </Badge>
+                      <StatusBadge status={app.status} size="sm" />
                     </td>
                     <td className="py-3 px-4 text-slate-300 font-mono text-[11px]">
                       {app.packageStipend}

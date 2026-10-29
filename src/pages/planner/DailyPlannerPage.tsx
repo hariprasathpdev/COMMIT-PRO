@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge, Modal } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, Modal, StatusBadge } from '../../components/ui/UIComponents';
 import { DailyTaskItem, StudySession } from '../../types';
 import {
   CalendarCheck,
@@ -269,6 +269,10 @@ export function DailyPlannerPage() {
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <StatusBadge
+                        status={task.isCompleted ? 'Completed' : 'In Progress'}
+                        size="sm"
+                      />
                       {!task.isCompleted && (
                         <button
                           title="Reschedule to Tomorrow"

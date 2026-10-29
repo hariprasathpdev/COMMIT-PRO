@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge, Modal } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, Modal, StatusBadge } from '../../components/ui/UIComponents';
 import { RoadmapStage, RoadmapTask, TaskStatus, TaskPriority, TaskDifficulty } from '../../types';
 import {
   Compass,
@@ -296,18 +296,7 @@ export function RoadmapPage() {
                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                           <div className="flex-1">
                             <div className="flex flex-wrap items-center gap-2 mb-1">
-                              <Badge
-                                variant={
-                                  task.status === 'Completed'
-                                    ? 'success'
-                                    : task.status === 'In Progress'
-                                    ? 'indigo'
-                                    : 'default'
-                                }
-                                size="sm"
-                              >
-                                {task.status}
-                              </Badge>
+                              <StatusBadge status={task.status} size="sm" />
                               <Badge variant="outline" size="sm">
                                 {task.category}
                               </Badge>
@@ -417,6 +406,7 @@ export function RoadmapPage() {
         >
           <div className="space-y-4 text-xs">
             <div className="flex flex-wrap items-center gap-2">
+              <StatusBadge status={selectedTask.task.status} size="sm" />
               <Badge variant="indigo" size="sm">
                 {selectedTask.task.category}
               </Badge>

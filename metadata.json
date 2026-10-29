@@ -2,5 +2,7 @@
   "name": "Commit Pro",
   "description": "Personalized career roadmap and placement preparation platform for college students targeting software engineering, full-stack, and tech careers.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

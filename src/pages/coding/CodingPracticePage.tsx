@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Card, Button, Badge, Modal } from '../../components/ui/UIComponents';
+import { Card, Button, Badge, Modal, StatusBadge } from '../../components/ui/UIComponents';
 import { DSAProblem, ProblemDifficulty, ProblemStatus } from '../../types';
 import {
   Code2,
@@ -245,16 +245,19 @@ export function CodingPracticePage() {
                     className="hover:bg-slate-800/40 transition group cursor-pointer"
                   >
                     <td className="py-3.5 px-4 text-center">
-                      <button
-                        onClick={() => toggleSolveProblem(prob.id)}
-                        className={`w-5 h-5 rounded-md border flex items-center justify-center text-xs transition cursor-pointer mx-auto ${
-                          isSolved
-                            ? 'bg-emerald-600 border-emerald-500 text-white'
-                            : 'border-slate-700 hover:border-slate-500'
-                        }`}
-                      >
-                        {isSolved && '✓'}
-                      </button>
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => toggleSolveProblem(prob.id)}
+                          className={`w-5 h-5 rounded-md border flex items-center justify-center text-xs transition cursor-pointer ${
+                            isSolved
+                              ? 'bg-emerald-600 border-emerald-500 text-white'
+                              : 'border-slate-700 hover:border-slate-500'
+                          }`}
+                        >
+                          {isSolved && '✓'}
+                        </button>
+                        <StatusBadge status={prob.status} size="sm" />
+                      </div>
                     </td>
 
                     <td
@@ -346,6 +349,7 @@ export function CodingPracticePage() {
           <div className="space-y-4 text-xs">
             <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
+                <StatusBadge status={activeProblem.status} size="sm" />
                 <Badge
                   variant={
                     activeProblem.difficulty === 'Easy'
